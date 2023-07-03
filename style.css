@@ -1,0 +1,39 @@
+h1 {
+  color: #f8b501;
+}
+
+span {
+  display: inline;
+  font: 1em sans-serif;
+  font-size: medium;
+  color: #f8b501;
+}
+
+ul {
+  list-style: none;
+  display: table;
+  font: 1em sans-serif;
+  font-size: 20px;
+  border-spacing: 0 10px;
+}
+
+li {
+  display: table-row;
+}
+
+b {
+  display: table-cell;
+  padding-right: 1em;
+  font: 1em sans-serif;
+  font-size: medium;
+  text-align: left;
+  color: white;
+}
+
+body {
+    background-color: #003262;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
