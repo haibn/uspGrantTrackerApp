@@ -8,73 +8,60 @@
 </head>
 <body>
     <div id="summary">
-        <h1>Student Awards</h1>
-        <div><b>Student name: <span id="summName">asdasd</span></b></div>
-        <div><b>Student ID (SID): <span id="summSid">12312</span></b></div>
-        <br>
-        <ul>
-            <li>
-                <b><span id="summSid">01/01/2023</span></b>
-                <b>Award: <span id="summSid">Emergency Award</span></b> 
-                <b>Status: <span id="summSid">Processing</span></b>
-                <b>Notes: <span id="summSid">Shakespeare was born and raised in Stratford-upon-Avon, Warwickshire. </span></b>
-            </li>
-            <li>
-                <b><span id="summSid">01/01/2023</span></b>
-                <b>Award: <span id="summSid">Housing Award</span></b> 
-                <b>Status: <span id="summSid">Processing</span></b>
-                <b>Notes: <span id="summSid">William Shakespeare (bapt. 26[a] April 1564 – 23 April 1616)[b] was an English playwright, poet and actor.</span></b>
-            </li>
-        </ul>
-        <br> <br>
-        <button id="backBtn" type="text" class="back" onclick="back()">Log out</button>
+      <h1>Student Awards Summary</h1>
+      <div class="student-info"><b>Student name: <span id="summName"></span></b></div>
+      <div class="student-info"><b>Student ID (SID): <span id="summSid"></span></b></div>
+      <br>
+      <ul id="records"></ul>
+      <br> <br>
+      <button id="backBtn" type="text" class="back" onclick="back()">Log out</button>
     </div>
-  
+
     <div id="home" class="form">
-        <button type="text" class="homeBtn" onclick="loginForm()">Log in</button>
-        <button type="text" class="homeBtn" onclick="signupForm()">Create account</button>
+      <button type="text" class="homeBtn" onclick="loginForm()">Log in</button>
+      <button type="text" class="homeBtn" onclick="signupForm()">Create account</button>
     </div>
-  
+
     <div id="login" class="form">
-        <button id="backBtn" type="text" class="back" onclick="back()">Back</button>
-  
-        <div id="sidInput" class="input-container ic1">
-          <input id="sidlogin" class="input" type="text" placeholder=" " />
-          <div class="cut"></div>
-          <label for="sidlogin" class="placeholder">sid</label>
-        </div>
-        
-        <div id="passwordInput" class="input-container ic1">
-          <input id="passwordlogin" class="input" type="text" placeholder=" " />
-          <div class="cut"></div>
-          <label for="passwordlogin" class="placeholder">password</label>
-        </div>
-  
-        <button type="text" class="submit" onclick="userLogIn()">login</button>
+      <button type="text" class="back" onclick="back()">Back</button>
+
+      <div id="sidInput" class="input-container ic1">
+        <input id="sidlogin" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="sidlogin" class="placeholder">sid</label>
+      </div>
+      
+      <div id="passwordInput" class="input-container ic1">
+        <input id="passwordlogin" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="passwordlogin" class="placeholder">password</label>
+      </div>
+
+      <button type="text" class="submit" onclick="userLogIn()">login</button>
     </div>
-  
+
     <div id="signup" class="form">
-        <button id="backBtn" type="text" class="back" onclick="back()">Back</button>
-  
-        <div id="sidInput" class="input-container ic1">
-          <input id="nameSignup" class="input" type="text" placeholder=" " />
-          <div class="cut"></div>
-          <label for="nameSignup" class="placeholder">full name</label>
-        </div>
-  
-        <div id="nameInput" class="input-container ic1">
-          <input id="sidSignup" class="input" type="text" placeholder=" " />
-          <div class="cut"></div>
-          <label for="sidSignup" class="placeholder">sid</label>
-        </div>
-        
-        <div id="passwordInput" class="input-container ic1">
-          <input id="passwordSignup" class="input" type="text" placeholder=" " />
-          <div class="cut"></div>
-          <label for="passwordSignup" class="placeholder">password</label>
-        </div>
-  
-        <button id="add" type="text" class="submit" onclick="createAccount()">sign up</button>
+      <button type="text" class="back" onclick="back()">Back</button>
+
+      <div id="sidInput" class="input-container ic1">
+        <input id="nameSignup" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="nameSignup" class="placeholder">full name</label>
+      </div>
+
+      <div id="nameInput" class="input-container ic1">
+        <input id="sidSignup" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="sidSignup" class="placeholder">sid</label>
+      </div>
+      
+      <div id="passwordInput" class="input-container ic1">
+        <input id="passwordSignup" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="passwordSignup" class="placeholder">password</label>
+      </div>
+
+      <button id="add" type="text" class="submit" onclick="createAccount()">sign up</button>
     </div>
 </body>
 </html>
