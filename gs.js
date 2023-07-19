@@ -1,5 +1,5 @@
-  // Gets the main html file and runs it
-  function doGet(e){
+// Gets the main html file and runs it
+function doGet(e){
     return HtmlService.createTemplateFromFile('index').evaluate();
   }
   
@@ -88,6 +88,7 @@
           sidCell : [],
           dateCell : [],
           awardCell : [],
+          amountCell: [],
           statusCell : [],
           notesCell : []
         }
@@ -96,6 +97,7 @@
           data.sidCell.push(wsResponses.getRange('E' + resPositions[i]).getValue());
           data.dateCell.push(wsResponses.getRange('A' + resPositions[i]).getValue().toISOString().substring(0, 10));
           data.awardCell.push(wsResponses.getRange('M' + resPositions[i]).getValue());
+          data.amountCell.push(wsResponses.getRange('N' + resPositions[i]).getValue());
           data.statusCell.push(wsResponses.getRange('Z' + resPositions[i]).getValue());
           data.notesCell.push(wsResponses.getRange('AA' + resPositions[i]).getValue());
         }
@@ -106,4 +108,59 @@
     } else {
       throw Error("User not found.");
     }
+  }
+  
+  function newQuickSearch(param) {
+    let sid = Number(param);
+    // access the database
+    let url = "https://docs.google.com/spreadsheets/d/11scOkr3HQhseyUir8YgwOabW3PwbeDA7wTVJUyuK2L8/edit#gid=916264064";
+    let ss = SpreadsheetApp.openByUrl(url);
+    // get the list of sids in the "Form Responses 1" sheet
+    let wsResponses = ss.getSheetByName("Form Responses 1");
+    let wsResponsesSids = wsResponses.getRange(2,5,wsResponses.getLastRow(), 1).getValues();
+    let reponsesSidList = wsResponsesSids.map(function(r) { return r[0]; });
+    // get the list of sids and passwords in the "Emergency Grant Tracker" sheet
+    let wsAccounts = ss.getSheetByName("Emergency Grant Tracker");
+    let wsAccountsSids = wsAccounts.getRange(2,2,wsAccounts.getLastRow(), 1).getValues();
+    let wsAccountsPasswords = wsAccounts.getRange(2,3,wsAccounts.getLastRow(), 1).getValues();
+    let sidList = wsAccountsSids.map(function(r) { return r[0]; });
+    let passwordList = wsAccountsPasswords.map(function(r) { return r[0]; });
+  
+    // check if there's an existing account with the given sid
+    let position = sidList.indexOf(sid);
+    if (position > -1) {
+      // retrieves the user's data from the database and sends it back to the frontend
+      let resPositions = getAllIndexes(reponsesSidList, sid);
+      resPositions = resPositions.map(v=> v+2)
+      let data = {
+        nameCell : [],
+        sidCell : [],
+        dateCell : [],
+        awardCell : [],
+        amountCell: [],
+        statusCell : [],
+        notesCell : []
+      }
+      for (i = 0; i < resPositions.length; i ++) {
+          data.nameCell.push("Log-in for more information");
+          data.sidCell.push(wsResponses.getRange('E' + resPositions[i]).getValue());
+          data.dateCell.push(wsResponses.getRange('A' + resPositions[i]).getValue().toISOString().substring(0, 10));
+          data.awardCell.push(wsResponses.getRange('M' + resPositions[i]).getValue());
+          data.amountCell.push("Log-in for more information");
+          data.statusCell.push(wsResponses.getRange('Z' + resPositions[i]).getValue());
+          data.notesCell.push(wsResponses.getRange('AA' + resPositions[i]).getValue());
+      }
+      return data;
+    } else {
+      throw Error("User not found.");
+    }
+  }
+  
+  // retrieve announcements from database
+  function getAnnouncements() {
+    let url = "https://docs.google.com/spreadsheets/d/11scOkr3HQhseyUir8YgwOabW3PwbeDA7wTVJUyuK2L8/edit#gid=916264064";
+    let ss = SpreadsheetApp.openByUrl(url);
+    let ws = ss.getSheetByName("Form Responses 1");
+    let content = ws.getRange("AB7").getValue();
+    return content;
   }
