@@ -7,91 +7,124 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="summary">
-        <div id="student-summary">
-        <h1>Student Awards Summary</h1>
+    <div id="summary-page">
+      <div id="glossary">
+        <span id="glossary-text">
+          <span style="color: #f8b501;">Approved by USP: </span>Application approved, awaiting grant submission to CalCentral. <br>
+          <span style="color: #f8b501;">Award submitted: </span>Grant submitted to CalCentral. <br>
+          <span style="color: #f8b501;">Rejected, read comment: </span>Application was rejected, please read comment for more details. <br>
+          <span style="color: #f8b501;">In progress: </span>Application received, currently processing. <br>
+          <span style="color: #f8b501;">Missing Documents: </span>Did not receive documents, please email documents to <br> uspemergencygrant@gmail.com to process your application. <br>
+          <span style="color: #f8b501;">Other, read comment: </span>Other comment/decision, please read comment for more details. <br>
+          <span style="color: #f8b501;">COAAR Needed: </span>Currently has no space in financial aid package to add awards to. <br> Please submit a Cost of Attendance Adjustment Request (COAAR) or meet with Keziah <br> from USP. <br>
+          <span style="color: #f8b501;">Received: </span>Application has been received and is pending processing.
+        </span>
+        <span>status glossary</span>
+      </div>
+      
+      <div id="summary">
+        <h1 class="student-info">Student Awards Summary</h1>
         <div class="student-info"><b>Student name: <span id="summName"></span></b></div>
         <div class="student-info"><b>Student ID (SID): <span id="summSid"></span></b></div>
-        <br>
-        <ul id="records"></ul>
-        <br> <br>
-        <button id="backBtn" type="text" class="back" onclick="back()">Log out</button>
+        <div id="student-summary">
+          <br>
+          <div id="listContainer">
+            <ul id="records"></ul>
+          </div>
+          <br> <br>
         </div>
+        <button id="backBtn" type="text" class="back" onclick="back()">Log out</button>
 
         <div id="announcements">
-        <h2 id="announcement-title">Announcements:</h3>
-        <div id="announcement-content">
+          <h2 id="announcement-title">Announcements:</h3>
+          <div id="announcement-content">
             <p id="announcement-text">no announcements</p>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
 
     <div id="home" class="form">
-        <div><button type="text" class="homeBtn" onclick="loginForm()">Log in</button></div>
-        <div><button type="text" class="homeBtn" onclick="signupForm()">Create account</button></div>
-        <div><button type="text" class="homeBtn" onclick="quickSearchForm()">Quick search</button></div>
-        <div><img src="https://drive.google.com/uc?export=download&id=1Ul-85dBTQGr-MvoH0O7O6R9n29Y_w--x" alt="USP Logo" id="logo"></div>
+      <div><button type="text" class="homeBtn" onclick="loginForm()">Log in</button></div>
+      <div><button type="text" class="homeBtn" onclick="signupForm()">Create account</button></div>
+      <div><button type="text" class="homeBtn" onclick="quickSearchForm()">Quick search</button></div>
+      <div><img src="https://drive.google.com/uc?export=download&id=1Ul-85dBTQGr-MvoH0O7O6R9n29Y_w--x" alt="USP Logo" id="logo"></div>
     </div>
 
     <div id="login" class="form">
-        <button type="text" class="back" onclick="back()">Back</button>
+      <button type="text" class="back" onclick="back()">Back</button>
 
-        <div id="sidInput" class="input-container ic1">
+      <div id="sidInput" class="input-container ic1">
         <input id="sidlogin" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
         <label for="sidlogin" class="placeholder">sid</label>
-        </div>
-        
-        <div id="passwordInput" class="input-container ic1">
+      </div>
+      
+      <div id="passwordInput" class="input-container ic1">
         <input id="passwordlogin" class="input" type="password" placeholder=" " />
         <i class="fa-solid fa-eye" id="show-password" onclick="togglePassword()"></i>
         <div class="cut"></div>
         <label for="passwordlogin" class="placeholder">password</label>
-        </div>
+      </div>
 
-        <button type="text" class="submit" onclick="userLogIn()">login</button>
+      <button type="text" class="submit" onclick="userLogIn()">login</button>
+      <button type="text" class="forgot-password" onclick="forgotPasswordForm()">Forgot your password?</button>
     </div>
 
     <div id="signup" class="form">
-        <button type="text" class="back" onclick="back()">Back</button>
+      <button type="text" class="back" onclick="back()">Back</button>
 
-        <div id="sidInput" class="input-container ic1">
+      <div id="sidInput" class="input-container ic1">
         <input id="nameSignup" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
         <label for="nameSignup" class="placeholder">full name</label>
-        </div>
+      </div>
 
-        <div id="nameInput" class="input-container ic1">
+      <div id="nameInput" class="input-container ic1">
         <input id="sidSignup" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
         <label for="sidSignup" class="placeholder">sid</label>
-        </div>
-        
-        <div id="passwordInput" class="input-container ic1">
+      </div>
+      
+      <div id="passwordInput" class="input-container ic1">
         <input id="passwordSignup" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
         <label for="passwordSignup" class="placeholder">password</label>
-        </div>
+      </div>
 
-        <button id="add" type="text" class="submit" onclick="createAccount()">sign up</button>
+      <button id="add" type="text" class="submit" onclick="createAccount()">sign up</button>
 
-        <h5 style="color: white;">Please write down your password for future logins!</h5>
+      <h5 style="color: white;">Please write down your password for future logins!</h5>
     </div>
 
     <div id="quickSearch" class="form">
-        <button type="text" class="back" onclick="back()">Back</button>
+      <button type="text" class="back" onclick="back()">Back</button>
 
-        <div id="sidInput" class="input-container ic1">
+      <div id="sidInput" class="input-container ic1">
         <input id="sidQuickSearch" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
         <label for="sidQuickSearch" class="placeholder">sid</label>
-        </div>
+      </div>
 
-        <button id="add" type="text" class="submit" onclick="quickSearch()">search</button>
+      <button id="add" type="text" class="submit" onclick="quickSearch()">search</button>
+    </div>
+
+    <div id="forgotPassword" class="form">
+      <button type="text" class="back" onclick="back()">Back</button>
+
+      <div class="input-container ic1">
+        <input id="sidForgotPassword" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="sidForgotPassword" class="placeholder">sid</label>
+      </div>
+
+      <button id="add" type="text" class="submit" onclick="forgotPassword()">get password</button>
     </div>
 
     <div id="signature">
-        <h6 class="signature-content" id="made-by">made by:</h6> <h6 class="signature-content"> haibin (ivan) yu | haibinyuy@berkeley.edu | <a href="https://www.instagram.com/haibny/" target="_blank">ig</a> | <a href="https://www.linkedin.com/in/haibinyu/" target="_blank">linkedin</a></h6>
+      <h6 class="signature-content" id="made-by">made by:</h6> <h6 class="signature-content"> haibin (ivan) yu | haibinyuy@berkeley.edu | <a href="https://www.instagram.com/haibny/" target="_blank">ig</a> | <a href="https://www.linkedin.com/in/haibinyu/" target="_blank">linkedin</a></h6>
     </div>
+
+    <div class="loader"></div>
 </body>
 </html>

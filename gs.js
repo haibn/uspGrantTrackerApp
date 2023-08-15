@@ -78,7 +78,7 @@ function doGet(e){
     // check if there's an existing account with the given sid
     let position = sidList.indexOf(sid);
     if (position > -1) {
-      // if so check if the given password matches the on in the database
+      // if so check if the given password matches the one in the database
       if (password == passwordList[position]) {
         // retrieves the user's data from the database and sends it back to the frontend
         let resPositions = getAllIndexes(reponsesSidList, sid);
@@ -163,4 +163,39 @@ function doGet(e){
     let ws = ss.getSheetByName("Form Responses 1");
     let content = ws.getRange("AB7").getValue();
     return content;
+  }
+  
+  function getPassword(param) {
+    // retrieves the sid inputted by the user converting it to a Number type for comparison purposes
+    let sid = Number(param);
+  
+    // access the database
+    let url = "https://docs.google.com/spreadsheets/d/11scOkr3HQhseyUir8YgwOabW3PwbeDA7wTVJUyuK2L8/edit#gid=916264064";
+    let ss = SpreadsheetApp.openByUrl(url);
+    // access to the "Emergency Grant Tracker sheet and the "Form Responses 1" sheet
+    let wsAccounts = ss.getSheetByName("Emergency Grant Tracker");
+    let wsResponses = ss.getSheetByName("Form Responses 1");
+    // get the list of sids in the "Emergency Grant Tracker" sheet and "Form Responses 1" sheet
+    let wsAccountsSids = wsAccounts.getRange(2,2,wsAccounts.getLastRow(), 1).getValues();
+    let wsResponsesSids = wsResponses.getRange(2,5,wsResponses.getLastRow(), 1).getValues();
+    let accountsSidList = wsAccountsSids.map(function(r) { return r[0]; });
+    let reponsesSidList = wsResponsesSids.map(function(r) { return r[0]; });
+    
+    // checks if the provided sid exists in the database and if there's an account already with the given sid
+    let accPosition = accountsSidList.indexOf(sid);
+    let resPosition = reponsesSidList.indexOf(sid);
+    if (resPosition > -1) {
+      resPosition = resPosition + 2;
+      let email = wsResponses.getRange('B' + resPosition).getValue();
+      let name = wsResponses.getRange('C' + resPosition).getValue();
+      if (accPosition > -1) {
+        accPosition = accPosition + 2;
+        let password = wsAccounts.getRange('C' + accPosition).getValue();
+        MailApp.sendEmail(email, "USP Grant Tracking App Password", "Hi " + name + ", your password is: " + password);
+      } else {
+        throw Error("Account with the given SID does not exist. Please create an account first.");
+      }
+    } else {
+      throw Error("SID not found in our records.");
+    }
   }
