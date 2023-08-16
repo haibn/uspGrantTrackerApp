@@ -104,7 +104,7 @@
     let name = document.getElementById("nameSignup");
     let sid = document.getElementById("sidSignup");
     let password = document.getElementById("passwordSignup");
-    let params = [name.value, sid.value, password.value];
+    let params = [name.value, sid.value, password.value, 0, 0];
     if (name.value != "" && sid.value != "" && password.value != "") {
       google.script.run.withSuccessHandler(accountCreatedSuccessfully).withFailureHandler(accountNotCreated).newAccount(params);
       name.value = "";
@@ -173,6 +173,7 @@
 
       spanDate.textContent = date[i];
       spanDate.setAttribute("class", "dateStyle");
+      spanDate.setAttribute("style", "white-space: nowrap;");
 
       spanAward.textContent = award[i];
       spanAmount.textContent = amount[i];

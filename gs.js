@@ -1,5 +1,5 @@
 // Gets the main html file and runs it
-function doGet(e){
+  function doGet(e){
     return HtmlService.createTemplateFromFile('index').evaluate();
   }
   
@@ -101,6 +101,9 @@ function doGet(e){
           data.statusCell.push(wsResponses.getRange('Z' + resPositions[i]).getValue());
           data.notesCell.push(wsResponses.getRange('AA' + resPositions[i]).getValue());
         }
+        //counts the number of log-ins
+        let count = wsAccounts.getRange('D' + (position + 2)).getValue();
+        wsAccounts.getRange('D' + (position + 2)).setValue(count + 1);
         return data;
       } else {
         throw Error("Incorrect password.");
@@ -150,6 +153,8 @@ function doGet(e){
           data.statusCell.push(wsResponses.getRange('Z' + resPositions[i]).getValue());
           data.notesCell.push(wsResponses.getRange('AA' + resPositions[i]).getValue());
       }
+      let count = wsAccounts.getRange('E' + (position + 2)).getValue();
+      wsAccounts.getRange('E' + (position + 2)).setValue(count + 1);
       return data;
     } else {
       throw Error("User not found.");
