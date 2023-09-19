@@ -1,4 +1,4 @@
-// Gets the main html file and runs it
+  // Gets the main html file and runs it
   function doGet(e){
     return HtmlService.createTemplateFromFile('index').evaluate();
   }
@@ -46,12 +46,12 @@
     let resPosition = reponsesSidList.indexOf(sid);
     if (resPosition > -1) {
       if (accPosition > -1) {
-        throw Error("Account with the given SID already exists.");
+        throw Error("Account already exists: Account with the given SID already exists.");
       } else {
         wsAccounts.appendRow(params);
       }
     } else {
-      throw Error("SID not found in our records.");
+      throw Error("SID not found: Only students who submitted an emergency grant form will have available information.");
     }
   }
   
@@ -106,15 +106,15 @@
         wsAccounts.getRange('D' + (position + 2)).setValue(count + 1);
         return data;
       } else {
-        throw Error("Incorrect password.");
+        throw Error("Incorrect password: Please make sure your password is correct.");
       }
     } else {
-      throw Error("User not found.");
+      throw Error("User not found: Please make sure your information is correct. Only students who submitted an emergency grant form will have available information.");
     }
   }
   
-  function newQuickSearch(param) {
-    let sid = Number(param);
+  function newQuickSearch(si, em) {
+    let sid = Number(si);
     // access the database
     let url = "https://docs.google.com/spreadsheets/d/11scOkr3HQhseyUir8YgwOabW3PwbeDA7wTVJUyuK2L8/edit#gid=916264064";
     let ss = SpreadsheetApp.openByUrl(url);
@@ -131,19 +131,23 @@
   
     // check if there's an existing account with the given sid
     let position = sidList.indexOf(sid);
-    if (position > -1) {
-      // retrieves the user's data from the database and sends it back to the frontend
-      let resPositions = getAllIndexes(reponsesSidList, sid);
-      resPositions = resPositions.map(v=> v+2)
-      let data = {
-        nameCell : [],
-        sidCell : [],
-        dateCell : [],
-        awardCell : [],
-        amountCell: [],
-        statusCell : [],
-        notesCell : []
-      }
+    // retrieves the user's data from the database and sends it back to the frontend
+    let resPositions = getAllIndexes(reponsesSidList, sid);
+    if (resPositions.length == 0) {
+      throw Error("User not found: Please make sure your information is correct. Only students who submitted an emergency grant form will have available information.");
+    }
+    resPositions = resPositions.map(v=> v+2)
+    let data = {
+      nameCell : [],
+      sidCell : [],
+      dateCell : [],
+      awardCell : [],
+      amountCell: [],
+      statusCell : [],
+      notesCell : []
+    }
+    let email = wsResponses.getRange('F' + resPositions[0]).getValue();
+    if (email == em) {
       for (i = 0; i < resPositions.length; i ++) {
           data.nameCell.push("Log-in for more information");
           data.sidCell.push(wsResponses.getRange('E' + resPositions[i]).getValue());
@@ -153,11 +157,13 @@
           data.statusCell.push(wsResponses.getRange('Z' + resPositions[i]).getValue());
           data.notesCell.push(wsResponses.getRange('AA' + resPositions[i]).getValue());
       }
-      let count = wsAccounts.getRange('E' + (position + 2)).getValue();
-      wsAccounts.getRange('E' + (position + 2)).setValue(count + 1);
+      if (position > -1) {
+        let count = wsAccounts.getRange('E' + (position + 2)).getValue();
+        wsAccounts.getRange('E' + (position + 2)).setValue(count + 1);
+      }
       return data;
     } else {
-      throw Error("User not found.");
+      throw Error("Incorrect Email: Please make sure to input the email you used for your grant application.");
     }
   }
   
@@ -170,9 +176,9 @@
     return content;
   }
   
-  function getPassword(param) {
+  function getPassword(si, em) {
     // retrieves the sid inputted by the user converting it to a Number type for comparison purposes
-    let sid = Number(param);
+    let sid = Number(si);
   
     // access the database
     let url = "https://docs.google.com/spreadsheets/d/11scOkr3HQhseyUir8YgwOabW3PwbeDA7wTVJUyuK2L8/edit#gid=916264064";
@@ -194,13 +200,16 @@
       let email = wsResponses.getRange('B' + resPosition).getValue();
       let name = wsResponses.getRange('C' + resPosition).getValue();
       if (accPosition > -1) {
+        if (email != em) {
+          throw Error("Incorrect Email: Please make sure to input the email you used for your grant application.");
+        }
         accPosition = accPosition + 2;
         let password = wsAccounts.getRange('C' + accPosition).getValue();
-        MailApp.sendEmail(email, "USP Grant Tracking App Password", "Hi " + name + ", your password is: " + password);
+        MailApp.sendEmail(email, "USP Grant Tracking App Password", "Hi " + name + "," + "\n" + "\n" + "Your password for the USP Emergency Grant Tracker is " + password + "." + "\n" + "Please make sure to keep this information for future use." + "\n" + "\n" + "For questions, please contact uspgrants@berkeley.edu");
       } else {
-        throw Error("Account with the given SID does not exist. Please create an account first.");
+        throw Error("User not found: Please create an account first.");
       }
     } else {
-      throw Error("SID not found in our records.");
+      throw Error("User not found: Only students who submitted an emergency grant form will have available information.");
     }
   }

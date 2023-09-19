@@ -1,7 +1,40 @@
+  function popupBtn() {
+    let popupForm = document.getElementById("popupid");
+    popupForm.style.display = "none";
+
+    // Returns popup content to Error
+    let alert = document.getElementById("popupH2");
+    let context = document.getElementById("popupP");
+    let tick = document.getElementById("tick");
+    let ex = document.getElementById("ex");
+    alert.innerHTML = "Error!";
+    context.style.display = "block";
+    tick.style.display = "none";
+    ex.style.display = "inline-block";
+
+    // Gets rid of grey overlay
+    let overlay = document.getElementById("overlay");
+    overlay.style.visibility = "hidden";
+    overlay.style.opacity = "0";
+
+    // Gets rid of forgot password button
+    let forgotPasswordBtn = document.getElementById("forgot-password-popup-id");
+    let forgotPasswordBr = document.getElementById("forgot-password-br");
+    if (forgotPasswordBtn) {
+      forgotPasswordBtn.remove();
+      forgotPasswordBr.remove();
+    }
+
+    // Gets rid of loading animation
+    loaded()
+  }
+
   //password show/hide toggle
   function togglePassword() {
     let showPassword = document.getElementById("show-password");
+    let showPasswordSignUp = document.getElementById("signup-show-password");
     let passwordField = document.getElementById("passwordlogin");
+    let passwordFieldSignUp = document.getElementById("passwordSignup");
 
     let type = passwordField.getAttribute("type") === "password" ? "text" : "password";
     passwordField.setAttribute("type", type);
@@ -10,6 +43,15 @@
       showPassword.style.color = "white";
     } else {
       showPassword.style.color = "#f8b501";
+    }
+
+    let signUpType = passwordFieldSignUp.getAttribute("type") === "password" ? "text" : "password";
+    passwordFieldSignUp.setAttribute("type", type);
+
+    if (signUpType == "password") {
+      showPasswordSignUp.style.color = "white";
+    } else {
+      showPasswordSignUp.style.color = "#f8b501";
     }
   }
 
@@ -47,6 +89,12 @@
     console.log(form);
     login.style.display = "none";
     form.style.display = "block";
+
+    // Gets rid of forgot password button by calling the popup button
+    let forgotPasswordBtn = document.getElementById("forgot-password-popup-id");
+    if (forgotPasswordBtn) {
+      popupBtn();
+    }
   }
 
   // Back button. When clicked, it returns to the home page
@@ -61,6 +109,7 @@
     let statusGlossary = document.getElementById("glossary");
     //signature color change
     let sig = document.getElementById("made-by");
+    let sigContent = document.getElementById("signature-content-id");
 
     if (signupForm.style.display == "block") {
       home.style.display = "block";
@@ -78,6 +127,7 @@
       loginForm.style.display = "none";
       quickSearchForm.style.display = "none";
       sig.style.color = "#f8b501";
+      sigContent.style.color = "white";
     } else {
       home.style.display = "block";
       loginForm.style.display = "none";
@@ -88,14 +138,26 @@
 
   // Failure Handler function used to alert the user if the inputted SID is not found in the database (google sheets)
   function accountNotCreated(error) {
-    loaded();
-    alert(error);
+    showPopup();
+    let alert = document.getElementById("popupH2");
+    let context = document.getElementById("popupP");
+    let errorMsgSplit = error.toString().split("Error: ")[2];
+    let errorMsgSplitFinal = errorMsgSplit.split(": ");
+    alert.innerHTML = errorMsgSplitFinal[0];
+    context.innerHTML = errorMsgSplitFinal[1];
   }
 
   // Success Handler function to let the user know the account was created successfully
   function accountCreatedSuccessfully() {
-    loaded();
-    alert("Account Created Successfully!");
+    showPopup();
+    let alert = document.getElementById("popupH2");
+    let context = document.getElementById("popupP");
+    let tick = document.getElementById("tick");
+    let ex = document.getElementById("ex");
+    alert.innerHTML = "Account Created Successfully!";
+    context.style.display = "none";
+    tick.style.display = "inline-block";
+    ex.style.display = "none";
   }
 
   // Checks that every field is filled out and creates a new account calling newAccount() from Code.gs
@@ -111,15 +173,30 @@
       sid.value = "";
       password.value = "";
     } else {
-      loaded();
-      alert("Missing fields.");
+      showPopup();
+      let context = document.getElementById("popupP");
+      context.innerHTML = "Missing fields.";
     }
   }
 
   // Failure Handler function used to alert the user that he could not login
   function unsuccessfulLogIn(error) {
-    loaded();
-    alert(error);
+    showPopup();
+
+    let popup = document.getElementById("popupid");
+    let alert = document.getElementById("popupH2");
+    let context = document.getElementById("popupP");
+    let errorMsgSplit = error.toString().split("Error: ")[2];
+    let errorMsgSplitFinal = errorMsgSplit.split(": ");
+
+    alert.innerHTML = errorMsgSplitFinal[0];
+    context.innerHTML = errorMsgSplitFinal[1];
+
+    // Add forgot password button to popup
+    if (errorMsgSplitFinal[0] == "Incorrect password") {
+      popup.innerHTML += "<br id='forgot-password-br'>";
+      popup.innerHTML += "<button type='text' class='forgot-password-popup' id='forgot-password-popup-id' onclick='forgotPasswordForm()'>Forgot your password?</button>";
+    }
   }
 
   // Success Handler function that retrieves the data from the backend (google sheets database) and displays the information to the user.
@@ -139,14 +216,18 @@
     let form = document.getElementById("login");
     let quickSearchForm = document.getElementById("quickSearch");
     let records = document.getElementById("records");
+    let backBtn = document.getElementById("backBtn");
+    let popup = document.getElementById("popup");
 
     // stores user's name and sid on index.html
     let newName = document.getElementById("summName");
     let newSid = document.getElementById("summSid");
     if (quickSearchForm.style.display == "block") {
       newName.innerHTML = "<span style='background-color: #FF8C00; color: #003262; border-radius: 6px;'>" + name[0] + "</span>";
+      backBtn.innerHTML = "Back";
     } else {
       newName.innerHTML = name[0];
+      backBtn.innerHTML = "Log out";
     }
     newSid.innerHTML = sid[0];
 
@@ -209,9 +290,10 @@
     }
     //signature color change
     let sig = document.getElementById("made-by");
+    let sigContent = document.getElementById("signature-content-id");
     sig.style.color = "#003262";
+    sigContent.style.color = "black";
 
-    // displays student summary and hides log in form
     form.style.display = "none";
     quickSearchForm.style.display = "none";
     summary.style.display = "block";
@@ -237,12 +319,14 @@
   function quickSearch() {
     loading();
     let sid = document.getElementById("sidQuickSearch").value;
+    let email = document.getElementById("emailQuickSearch").value;
 
     // displays announcements
     google.script.run.withSuccessHandler(displayAnnouncements).getAnnouncements();
 
-    google.script.run.withSuccessHandler(loggedIn).withFailureHandler(unsuccessfulLogIn).newQuickSearch(sid);
+    google.script.run.withSuccessHandler(loggedIn).withFailureHandler(unsuccessfulLogIn).newQuickSearch(sid, email);
     document.getElementById("sidQuickSearch").value = "";
+    document.getElementById("emailQuickSearch").value = "";
   }
 
   // Displays announcements to user
@@ -253,27 +337,45 @@
 
   // Alerts users if password is retrieved successfully
   function passwordRetrieved() {
-    loaded();
-    alert("Your password has been sent to your email!");
+    showPopup();
+    let alert = document.getElementById("popupH2");
+    let context = document.getElementById("popupP");
+    let tick = document.getElementById("tick");
+    let ex = document.getElementById("ex");
+    alert.innerHTML = "Please check your email for your password.";
+    context.style.display = "none";
+    tick.style.display = "inline-block";
+    ex.style.display = "none";
   }
 
   // Retrieves password and sends it to the user
   function forgotPassword() {
     loading();
-    let sid = document.getElementById("sidForgotPassword");
-    google.script.run.withSuccessHandler(passwordRetrieved).withFailureHandler(unsuccessfulLogIn).getPassword(sid.value);
+    let sid = document.getElementById("sidForgotPassword").value;
+    let email = document.getElementById("emailPasswordRecovery").value;
 
-    sid.value = "";
+    google.script.run.withSuccessHandler(passwordRetrieved).withFailureHandler(unsuccessfulLogIn).getPassword(sid, email);
+
+    document.getElementById("sidForgotPassword").value = "";
+    document.getElementById("emailPasswordRecovery").value = "";
   }
 
   function loading() {
     let loader = document.querySelector(".loader");
     loader.style.visibility = "visible";
-    loader.style.opacity = "1";
+    loader.style.opacity = "0.9";
   }
 
   function loaded() {
     let loader = document.querySelector(".loader");
     loader.style.visibility = "hidden";
     loader.style.opacity = "0";
+  }
+
+  function showPopup() {
+    let popupForm = document.getElementById("popupid");
+    let overlay = document.getElementById("overlay");
+    popupForm.style.display = "block";
+    overlay.style.visibility = "visible";
+    overlay.style.opacity = "0.26";
   }

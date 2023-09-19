@@ -1,3 +1,73 @@
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.popup {
+  width: 400px;
+  background: #ffff;
+  border-radius: 6px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 0 30px 30px;
+  color: #333;
+  display: none;
+  z-index: 99;
+}
+
+.popup #popupH2 {
+  font-size: 38px;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.popup #popupBtn {
+  width: 100px;
+  margin-top: 30px;
+  padding: 10px 0;
+  background: #003262;
+  color: white;
+  border: 0;
+  outline: none;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup .popupLogo {
+  left: 50%;
+  width: 100px;
+  margin-top: -50px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, alpha);
+}
+
+#popupBtn:hover {
+  background-color: #f8b501;
+}
+
+#ex {
+  display: inline-block;
+}
+
+#tick {
+  display: none;
+}
+
 #student-summary {
   max-width: 80vw;
   max-height: 300px;
@@ -71,6 +141,9 @@ a {
 .signature-content {
   margin: 0;
   display: inline;
+}
+
+#signature-content-id {
   color: white;
 }
 
@@ -103,6 +176,10 @@ a {
   color: white;
 }
 
+#signup-show-password {
+  color: white;
+}
+
 .fa-eye {
   position: absolute;
   top: 35%;
@@ -131,7 +208,7 @@ a {
 }
 
 #login {
-  margin-top: 100px;
+  margin-top: 160px;
   display: none;
 }
 
@@ -162,10 +239,12 @@ ul {
   font: 1em sans-serif;
   font-size: 20px;
   border-spacing: 0 10px;
+  /* border-collapse: collapse; */
 }
 
 li {
   display: table-row;
+  /* border-bottom: 6px solid #333; */
 }
 
 b {
@@ -252,12 +331,29 @@ body {
   width: 73px;
 }
 
+.cut-long {
+  background-color: #003262;
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 158px;
+}
+
 .cut-short {
   width: 50px;
 }
 
 .input:focus ~ .cut,
 .input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.input:focus ~ .cut-long,
+.input:not(:placeholder-shown) ~ .cut-long {
   transform: translateY(8px);
 }
 
@@ -349,6 +445,25 @@ body {
 }
 
 .forgot-password:hover {
+  color: #f8b501;
+}
+
+/* popup forgot passwrod button */
+.forgot-password-popup {
+  font-family: sans-serif;
+  color: black;
+  background:none;
+  border:none;
+  margin-top: 20px;
+  padding:0;
+  cursor: pointer;
+  outline: 0;
+  text-align: center;
+  position: relative;
+  right: -130px;
+}
+
+.forgot-password-popup:hover {
   color: #f8b501;
 }
 

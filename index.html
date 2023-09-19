@@ -47,7 +47,7 @@
     <div id="home" class="form">
       <div><button type="text" class="homeBtn" onclick="loginForm()">Log in</button></div>
       <div><button type="text" class="homeBtn" onclick="signupForm()">Create account</button></div>
-      <div><button type="text" class="homeBtn" onclick="quickSearchForm()">Quick search</button></div>
+      <div><button type="text" class="homeBtn" onclick="quickSearchForm()">Quick Search</button></div>
       <div><img src="https://drive.google.com/uc?export=download&id=1Ul-85dBTQGr-MvoH0O7O6R9n29Y_w--x" alt="USP Logo" id="logo"></div>
     </div>
 
@@ -57,17 +57,17 @@
       <div id="sidInput" class="input-container ic1">
         <input id="sidlogin" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
-        <label for="sidlogin" class="placeholder">sid</label>
+        <label for="sidlogin" class="placeholder">Student ID</label>
       </div>
       
       <div id="passwordInput" class="input-container ic1">
         <input id="passwordlogin" class="input" type="password" placeholder=" " />
         <i class="fa-solid fa-eye" id="show-password" onclick="togglePassword()"></i>
         <div class="cut"></div>
-        <label for="passwordlogin" class="placeholder">password</label>
+        <label for="passwordlogin" class="placeholder">Password</label>
       </div>
 
-      <button type="text" class="submit" onclick="userLogIn()">login</button>
+      <button type="text" class="submit" onclick="userLogIn()">Login</button>
       <button type="text" class="forgot-password" onclick="forgotPasswordForm()">Forgot your password?</button>
     </div>
 
@@ -77,22 +77,23 @@
       <div id="sidInput" class="input-container ic1">
         <input id="nameSignup" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
-        <label for="nameSignup" class="placeholder">full name</label>
+        <label for="nameSignup" class="placeholder">Full Name</label>
       </div>
 
       <div id="nameInput" class="input-container ic1">
         <input id="sidSignup" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
-        <label for="sidSignup" class="placeholder">sid</label>
+        <label for="sidSignup" class="placeholder">Student ID</label>
       </div>
       
       <div id="passwordInput" class="input-container ic1">
-        <input id="passwordSignup" class="input" type="text" placeholder=" " />
+        <input id="passwordSignup" class="input" type="password" placeholder=" " />
+        <i class="fa-solid fa-eye" id="signup-show-password" onclick="togglePassword()"></i>
         <div class="cut"></div>
-        <label for="passwordSignup" class="placeholder">password</label>
+        <label for="passwordSignup" class="placeholder">Password</label>
       </div>
 
-      <button id="add" type="text" class="submit" onclick="createAccount()">sign up</button>
+      <button id="add" type="text" class="submit" onclick="createAccount()">Sign Up</button>
 
       <h5 style="color: white;">Please write down your password for future logins!</h5>
     </div>
@@ -103,10 +104,16 @@
       <div id="sidInput" class="input-container ic1">
         <input id="sidQuickSearch" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
-        <label for="sidQuickSearch" class="placeholder">sid</label>
+        <label for="sidQuickSearch" class="placeholder">Student ID</label>
       </div>
 
-      <button id="add" type="text" class="submit" onclick="quickSearch()">search</button>
+      <div class="input-container ic1">
+        <input id="emailQuickSearch" class="input" type="text" placeholder=" " />
+        <div class="cut-long"></div>
+        <label for="emailQuickSearch" class="placeholder">Email Associated with SID</label>
+      </div>
+
+      <button id="add" type="text" class="submit" onclick="quickSearch()">Search</button>
     </div>
 
     <div id="forgotPassword" class="form">
@@ -115,16 +122,32 @@
       <div class="input-container ic1">
         <input id="sidForgotPassword" class="input" type="text" placeholder=" " />
         <div class="cut"></div>
-        <label for="sidForgotPassword" class="placeholder">sid</label>
+        <label for="sidForgotPassword" class="placeholder">Student ID</label>
       </div>
 
-      <button id="add" type="text" class="submit" onclick="forgotPassword()">get password</button>
+      <div class="input-container ic1">
+        <input id="emailPasswordRecovery" class="input" type="text" placeholder=" " />
+        <div class="cut-long"></div>
+        <label for="emailPasswordRecovery" class="placeholder">Email Associated with SID</label>
+      </div>
+
+      <button id="add" type="text" class="submit" onclick="forgotPassword()">Get Password</button>
     </div>
 
     <div id="signature">
-      <h6 class="signature-content" id="made-by">made by:</h6> <h6 class="signature-content"> haibin (ivan) yu | haibinyuy@berkeley.edu | <a href="https://www.instagram.com/haibny/" target="_blank">ig</a> | <a href="https://www.linkedin.com/in/haibinyu/" target="_blank">linkedin</a></h6>
+      <h6 class="signature-content" id="made-by">made by:</h6> <h6 class="signature-content" id="signature-content-id"> haibin (ivan) yu | haibinyuy@berkeley.edu | <a href="https://www.instagram.com/haibny/" target="_blank">ig</a> | <a href="https://www.linkedin.com/in/haibinyu/" target="_blank">linkedin</a></h6>
+    </div>
+
+    <div id="popupid" class="popup">
+      <img src="https://drive.google.com/uc?export=download&id=1QES9yeTOxCwLiVk1a8VXRciQ5WGgISBB" alt="USP Logo" class="popupLogo" id="tick">
+      <img src="https://drive.google.com/uc?export=download&id=1GDZfrZ7TjfeBeRRbCx2Tg0mxq3nh6vT4" alt="USP Logo" class="popupLogo" id="ex">
+      <h2 id="popupH2">Error!</h2>
+      <p id="popupP"></p>
+      <button id="popupBtn" onclick="popupBtn()">Ok</button>
     </div>
 
     <div class="loader"></div>
-</body>
+
+    <div id="overlay"></div>
+  </body>
 </html>
